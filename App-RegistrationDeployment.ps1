@@ -215,7 +215,7 @@ If ($HasErrors){
 
 
 #region Determine AzureRmDnsAvailability
-$_TenantId = $DynamicsAXApiId.split('.')[0]
+$_TenantId = $DynamicsAXApiId.split('.')[0].ToLower('')
 $_TenantId = $_TenantId.substring(0,16)
 $_TenantId = $_TenantId + "-exflow"
 If (-not(Get-AzureRmResourceGroup -Name $_TenantId -Location $Location -ErrorAction SilentlyContinue) -and `
