@@ -215,6 +215,8 @@ If ($HasErrors){
 
 
 #region Determine AzureRmDnsAvailability
+write-host "MAGRA"
+write-host $ReplacePattern
 $_TenantId = $DynamicsAXApiId.split('.')[0].ToLower('')
 if ($_TenantId.Length -gt 16)
 {
