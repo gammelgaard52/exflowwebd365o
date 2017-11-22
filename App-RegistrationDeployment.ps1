@@ -28,7 +28,10 @@ param(
     [string]$TenantnameSpecific,
 
     [Parameter()]
-    [string]$ReplacePattern='[^a-zA-Z0-9]'
+    [string]$ReplacePattern='[^a-zA-Z0-9]',
+
+    [Parameter()]
+    [string]$AADSecretKeyBackup=$env:USERPROFILE
 
 )
 
@@ -414,7 +417,7 @@ If (-not($AzureRmADApplication = Get-AzureRmADApplication -DisplayNameStartWith 
     $psadCredential.Password  = $psadKeyValue
     
     $SecurePassword = $psadKeyValue | ConvertTo-SecureString -AsPlainText -Force
-    $SecurePassword | Export-Clixml "$env:USERPROFILE\PSDAKey.xml"
+    $SecurePassword | Export-Clixml "$AADSecretKeyBackup\PSDAKey.xml"
 
     Write-Output $psadCredential
 
@@ -440,10 +443,10 @@ Else
     Write-Output "Importing PSADCredential"
     Write-Output "--------------------------------------------------------------------------------"
 
-    If (!(Test-Path -Path "$($env:USERPROFILE)\PSDAKey.csv" -ErrorAction SilentlyContinue))
+    If (!(Test-Path -Path "$($AADSecretKeyBackup)\PSDAKey.csv" -ErrorAction SilentlyContinue))
     {
 
-        $SecurePassword = Import-Clixml "$env:USERPROFILE\PSDAKey.xml"
+        $SecurePassword = Import-Clixml "$AADSecretKeyBackup\PSDAKey.xml"
         $psadKeyValue  = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($SecurePassword))
 
         Write-Output $psadKeyValue
