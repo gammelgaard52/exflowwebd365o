@@ -30,8 +30,8 @@ param(
     [Parameter()]
     [string]$ReplacePattern='[^a-zA-Z0-9]',
 
-    [Parameter()]
-    [string]$AADSecretKeyBackup=$env:USERPROFILE
+    [Parameter(Mandatory=$True)]
+    [string]$AADSecretKeyBackup
 
 )
 
